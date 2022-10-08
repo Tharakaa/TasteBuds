@@ -2,7 +2,7 @@ import React from "react";
 import Dashboard from "./Dashboard";
 import Item from "./Item";
 import Navbar from "./Navbar";
-import Outlet from "./Outlet";
+import Outlet from "./outlet/Outlet";
 import { Route, Routes } from "react-router-dom";
 
 const Admin = () => {

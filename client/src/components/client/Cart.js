@@ -1,7 +1,5 @@
 const ShoppingCart = () => {
-    return (
-        <div>Shopping Cart</div>
-    )
-}
+  return <div className="page-default-height">Shopping Cart</div>;
+};
 
 export default ShoppingCart;
