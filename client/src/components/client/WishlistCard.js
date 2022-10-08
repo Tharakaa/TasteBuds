@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const WishlistCard = ({ item, removeWishlistItem, index, callType }) => {
+  console.log(callType);
   const baseURL = process.env.REACT_APP_BASE_URL;
   const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
 
@@ -35,7 +36,7 @@ const WishlistCard = ({ item, removeWishlistItem, index, callType }) => {
               <Rating
                 size="small"
                 readOnly
-                value={item.ratings}
+                value={item.rating}
                 precision={0.5}
               ></Rating>
               <br />

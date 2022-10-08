@@ -8,6 +8,7 @@ import GoogleMap from "./GoogleMap";
 const OutletView = () => {
   const baseURL = process.env.REACT_APP_BASE_URL;
   const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
+  const userId = localStorage.getItem("userId");
   let { id } = useParams();
   const [outlet, setOutlet] = useState({});
   const [itemArr, setItemArr] = useState([]);
@@ -21,7 +22,8 @@ const OutletView = () => {
   };
 
   const getAllItem = async () => {
-    const { data } = await axios.get(`${baseURL}items/outlet/${id}`);
+    const { data } = await axios.get(`${baseURL}items/outlet/${id}?userId=${userId}`);
+    console.log(data);
     setItemArr(data);
   };
 
@@ -64,7 +66,7 @@ const OutletView = () => {
           {itemArr.map((item, index) => {
             return (
               <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={item._id}>
-                <ItemCard item={item} />
+                <ItemCard itemData={item} />
               </div>
             );
           })}
