@@ -34,7 +34,7 @@ const OutletList = () => {
       <div className="row">
         {outletArr.map((outlet) => {
           return (
-            <div className="col-12 col-md-6 col-lg-3 " key={outlet._id}>
+            <div className="col-12 col-md-6 col-lg-3 mb-4" key={outlet._id}>
               <OutletCard outletData={outlet} />
             </div>
           );

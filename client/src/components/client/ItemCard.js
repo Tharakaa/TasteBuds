@@ -68,8 +68,9 @@ const ItemCard = ({ itemData }) => {
         </div>
         <h4>Rs.{item.price}</h4>
         <h5>Description: {item.description}</h5>
-
-        <button className="btn custom-btn w-100 mt-3">
+      </div>
+      <div className="card-footer bg-white mt-0 pt-0 border-0 pb-4">
+      <button className="btn custom-btn w-100">
           <ShoppingCartIcon />
           <span className="ps-2">Add to cart </span>
         </button>
