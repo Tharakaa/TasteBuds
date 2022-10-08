@@ -6,13 +6,13 @@ const OutletList = () => {
   const [outletArr, setOutletArr] = useState([]);
 
   const getAllOutlet = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/outlets"); 
+    const { data } = await axios.get("http://localhost:5000/api/outlets");
     setOutletArr(data);
   };
-  
+
   useEffect(() => {
     getAllOutlet();
-  }, []); 
+  }, []);
 
   return (
     <React.Fragment>

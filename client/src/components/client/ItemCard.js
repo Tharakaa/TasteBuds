@@ -17,7 +17,7 @@ const ItemCard = ({ item }) => {
         >
           {item.name}
         </h2>
-        <div className="overflow-hidden " style={{}}>
+        <div className="overflow-hidden ">
           <img src={item.imgUrl} className="card-img-top zoom" alt="..." />
         </div>
 

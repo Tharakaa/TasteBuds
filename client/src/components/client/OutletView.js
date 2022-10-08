@@ -5,7 +5,7 @@ import ItemCard from "./ItemCard";
 
 const OutletView = () => {
   let { id } = useParams();
-  
+
   const [itemArr, setItemArr] = useState([]);
 
   const getAllItem = async () => {

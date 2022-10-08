@@ -15,7 +15,7 @@ const OutletCard = ({ outlet }) => {
         >
           {outlet.name}
         </h2>
-        <div className="overflow-hidden " style={{}}>
+        <div className="overflow-hidden ">
           <img src={outlet.imgUrl} className="card-img-top" alt="..." />
         </div>
 
