@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import axios from "axios";
 
-const OutletCard = ({ outlet }) => {
+const OutletCard = ({ outletData }) => {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
+  const userId = localStorage.getItem("userId");
+  const [outlet, setOutlet] = useState(outletData);
+
+  const addToWishList = async () => {
+    await axios.post(`${baseURL}wishlists`, {
+      type: "OUTLET",
+      userId,
+      itemOrOutletId: outlet._id,
+    });
+    outletData.isInWishlist = !outletData.isInWishlist;
+    setOutlet(JSON.parse(JSON.stringify(outletData)));
+  };
+
   return (
     <React.Fragment>
       <div
         className="card mb-4 shadow  rounded"
         style={{ backgroundColor: "white" }}
       >
+        <div className="text-end text-danger p-2">
+          {outlet.isInWishlist ? (
+            <FavoriteIcon onClick={() => addToWishList(outlet)} />
+          ) : (
+            <FavoriteBorderIcon onClick={() => addToWishList(outlet)} />
+          )}
+        </div>
         <h4
           className="text-center p-1"
           style={{ color: "black", fontWeight: "bolder" }}
@@ -37,10 +61,10 @@ const OutletCard = ({ outlet }) => {
             />
           </div>
           <h5>{outlet.address}</h5>
-          <h5>Dine-in &nbsp;&nbsp;Takeaway &nbsp;&nbsp;Delivery</h5>
-          <button className="btn btn-primary ">
+          <p>Dine-in &nbsp;&nbsp;Takeaway &nbsp;&nbsp;Delivery</p>
+          <button className="btn btn-success w-100">
             <Link className="text-white" to={`/outlet/${outlet._id}`}>
-              <h6>View more</h6>
+              <div>View more</div>
             </Link>
           </button>
         </div>

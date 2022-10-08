@@ -1,14 +1,28 @@
 const Outlet = require("../models/outletModel.js");
+const Wishlist = require("../models/wishlistModel");
 
 //get all
 const getAllOutlet = async (req, res) => {
-  try {
-    let outlets = await Outlet.find().sort({ rating: "desc" });
-
-    res.send(outlets);
-  } catch (err) {
-    return res.status(500).send(`Error: ${err.message}`);
+  let userId = req.query.userId;
+  let wishlistIds = [];
+  if (userId) {
+    wishlistIds = await Wishlist.find({
+      userId: userId,
+      type: "OUTLET",
+    }).select(["itemOrOutletId"]);
   }
+  let result = await Outlet.find();
+  let outlets = result.map((item) => {
+    let itemTmp = JSON.parse(JSON.stringify(item));
+    itemTmp["isInWishlist"] = false;
+    wishlistIds.map((id) => {
+      if (id.itemOrOutletId === itemTmp._id) {
+        itemTmp["isInWishlist"] = true;
+      }
+    });
+    return itemTmp;
+  });
+  res.send(outlets);
 };
 
 const getById = async (req, res) => {

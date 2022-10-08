@@ -3,11 +3,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const OutletList = () => {
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const [outletArr, setOutletArr] = useState([]);
+  const userId = localStorage.getItem("userId");
 
   const getAllOutlet = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/outlets");
-    setOutletArr(data);
+    try {
+      const { data } = await axios.get(`${baseURL}outlets?userId=${userId}`);
+      console.log(data);
+      setOutletArr(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -28,7 +35,7 @@ const OutletList = () => {
         {outletArr.map((outlet) => {
           return (
             <div className="col-12 col-md-6 col-lg-3 " key={outlet._id}>
-              <OutletCard outlet={outlet} />
+              <OutletCard outletData={outlet} />
             </div>
           );
         })}
