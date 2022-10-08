@@ -8,6 +8,7 @@ import OutletPage from "./OutletPage.js";
 import OutletView from "./OutletView.js";
 import Footer from "./Footer.js";
 import OrderHistory from "./OrderHistory";
+import Checkout from "./Checkout.js";
 
 const Client = () => {
   return (
@@ -21,6 +22,7 @@ const Client = () => {
         <Route path="/favourite-outlets" element={<FavouriteOutlet />} />
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
 
       <Footer></Footer>
