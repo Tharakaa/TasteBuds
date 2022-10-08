@@ -3,6 +3,7 @@ import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
 
 const OutletCard = ({ outlet }) => {
+  const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
   return (
     <React.Fragment>
       <div
@@ -16,7 +17,11 @@ const OutletCard = ({ outlet }) => {
           {outlet.name}
         </h2>
         <div className="overflow-hidden ">
-          <img src={outlet.imgUrl} className="card-img-top" alt="..." />
+          <img
+            src={fileBaseURL + outlet.imgUrl}
+            className="card-img-top"
+            alt="..."
+          />
         </div>
 
         <div className="card-body ">

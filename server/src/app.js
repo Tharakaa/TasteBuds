@@ -14,6 +14,7 @@ const DB_CONNECTION = process.env.DB_CONNECTION;
 const APP = express();
 APP.use(cors());
 APP.use(express.json());
+APP.use(express.static("public"))
 APP.use("/api/users", userRoute);
 APP.use("/api/outlets", outletRoute); 
 APP.use("/api/items", itemRoute);

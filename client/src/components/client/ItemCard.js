@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const ItemCard = ({ item }) => {
+  const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
   return (
     <React.Fragment>
       <div
@@ -18,7 +19,11 @@ const ItemCard = ({ item }) => {
           {item.name}
         </h2>
         <div className="overflow-hidden ">
-          <img src={item.imgUrl} className="card-img-top zoom" alt="..." />
+          <img
+            src={fileBaseURL + item.imgUrl}
+            className="card-img-top zoom"
+            alt="..."
+          />
         </div>
 
         <div className="card-body ">
