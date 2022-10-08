@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { TextField } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const OutletCreate = ({ changeStatus }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -26,21 +27,21 @@ const OutletCreate = ({ changeStatus }) => {
       ) {
         let updatedObj = {
           ...data,
-          imgUrl: fileCreateRes.data.res[0]
+          imgUrl: fileCreateRes.data.res[0],
         };
         let res = await axios.post(`${baseURL}outlets`, updatedObj);
         if (res.data.message) {
           changeStatus();
           reset();
-          alert("Outlet create success!");
+          toast.success("Outlet create success!");
         } else {
-          alert("Outlet create failed!");
+          toast.error("Outlet create failed!");
         }
       } else {
-        alert("Outlet create failed!");
+        toast.error("Outlet create failed!");
       }
     } catch (e) {
-      alert("Outlet create failed!");
+      toast.error("Outlet create failed!");
     }
   };
 

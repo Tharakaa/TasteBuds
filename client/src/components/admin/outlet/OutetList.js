@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OutletList = ({ listChanged }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -31,9 +32,9 @@ const OutletList = ({ listChanged }) => {
         let updatedObj = JSON.parse(JSON.stringify(outlets));
         updatedObj.splice(index, 1);
         setOutlets(updatedObj);
-        alert("Outlet delete success!");
+        toast.success("Outlet delete success!");
       } catch (e) {
-        alert("Outlet delete failed!");
+        toast.error("Outlet delete failed!");
       }
     }
   };
