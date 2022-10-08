@@ -10,12 +10,12 @@ const OutletCard = ({ outlet }) => {
         className="card mb-4 shadow  rounded"
         style={{ backgroundColor: "white" }}
       >
-        <h2
+        <h4
           className="text-center p-1"
           style={{ color: "black", fontWeight: "bolder" }}
         >
           {outlet.name}
-        </h2>
+        </h4>
         <div className="overflow-hidden ">
           <img
             src={fileBaseURL + outlet.imgUrl}

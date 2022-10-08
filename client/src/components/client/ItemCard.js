@@ -12,12 +12,12 @@ const ItemCard = ({ item }) => {
         className="card mb-4 shadow bg-white rounded"
         style={{ backgroundColor: "white" }}
       >
-        <h2
+        <h4
           className="text-center p-1"
           style={{ color: "black", fontWeight: "bolder" }}
         >
           {item.name}
-        </h2>
+        </h4>
         <div className="overflow-hidden ">
           <img
             src={fileBaseURL + item.imgUrl}

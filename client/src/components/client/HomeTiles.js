@@ -27,12 +27,12 @@ const HomeTiles = () => {
                   style={{ borderRadius: "100px" }}
                 />
               </div>
-              <h3
+              <h4
                 className="text-center p-2"
                 style={{ color: "black", fontWeight: "bolder" }}
               >
                 {tile.name}
-              </h3>
+              </h4>
             </div>
           </div>
         );

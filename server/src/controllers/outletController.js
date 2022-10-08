@@ -11,4 +11,15 @@ const getAllOutlet = async (req, res) => {
   }
 };
 
-module.exports = { getAllOutlet };
+const getById = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let result = await Outlet.findOne({ _id: id });
+    res.send(result);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+};
+
+
+module.exports = { getAllOutlet, getById };

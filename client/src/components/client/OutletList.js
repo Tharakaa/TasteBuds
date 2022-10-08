@@ -17,12 +17,12 @@ const OutletList = () => {
   return (
     <React.Fragment>
       <div className="container wrapper">
-        <h1
+        <h2
           className="text-center p-5 text-black "
           style={{ fontWeight: "bolder" }}
         >
           Famous Food Outlets
-        </h1>
+        </h2>
       </div>
       <div className="row">
         {outletArr.map((outlet) => {
