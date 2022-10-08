@@ -31,7 +31,7 @@ const FavouriteOutlet = () => {
           {items.length > 0 ? (
             items.map((item, index) => (
               <div
-                className="col-6 col-md-4 col-lg-3 col-xxl-2 mb-4"
+              className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4"
                 key={index}
               >
                 <WishlistCard

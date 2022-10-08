@@ -4,6 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ItemCard = ({ itemData }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -18,12 +19,15 @@ const ItemCard = ({ itemData }) => {
       itemOrOutletId: item._id,
     });
     itemData.isInWishlist = !itemData.isInWishlist;
+    itemData.isInWishlist
+      ? toast.success("Successfully added!")
+      : toast.warning("Successfully removed!");
     setItem(JSON.parse(JSON.stringify(itemData)));
   };
 
   return (
     <div
-      className="card mb-4 shadow bg-white rounded"
+      className="card h-100 mb-4 shadow bg-white rounded"
       style={{ backgroundColor: "white" }}
     >
       <h4
@@ -40,7 +44,7 @@ const ItemCard = ({ itemData }) => {
         />
       </div>
 
-      <div className="card-body ">
+      <div className="card-body">
         <div className="d-flex justify-content-between ">
           <div className="d-flex ">
             <h5>{item.rating.toFixed(1)} &nbsp; </h5>
@@ -52,7 +56,7 @@ const ItemCard = ({ itemData }) => {
             />
           </div>
           <div>
-            <div className="text-danger">
+            <div className="custom-green-color">
               {item.isInWishlist}
               {item.isInWishlist ? (
                 <FavoriteIcon onClick={() => addToWishList(item)} />
@@ -65,7 +69,7 @@ const ItemCard = ({ itemData }) => {
         <h4>Rs.{item.price}</h4>
         <h5>Description: {item.description}</h5>
 
-        <button className="btn btn-success w-100 mt-3">
+        <button className="btn custom-btn w-100 mt-3">
           <ShoppingCartIcon />
           <span className="ps-2">Add to cart </span>
         </button>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OutletCard = ({ outletData }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -18,16 +19,19 @@ const OutletCard = ({ outletData }) => {
       itemOrOutletId: outlet._id,
     });
     outletData.isInWishlist = !outletData.isInWishlist;
+    outletData.isInWishlist
+      ? toast.success("Successfully added!")
+      : toast.warning("Successfully removed!");
     setOutlet(JSON.parse(JSON.stringify(outletData)));
   };
 
   return (
     <React.Fragment>
       <div
-        className="card mb-4 shadow  rounded"
+        className="card w-100 mb-4 shadow  rounded"
         style={{ backgroundColor: "white" }}
       >
-        <div className="text-end text-danger p-2">
+        <div className="text-end custom-green-color p-2">
           {outlet.isInWishlist ? (
             <FavoriteIcon onClick={() => addToWishList(outlet)} />
           ) : (
@@ -61,8 +65,8 @@ const OutletCard = ({ outletData }) => {
             />
           </div>
           <h5>{outlet.address}</h5>
-          <p>Dine-in &nbsp;&nbsp;Takeaway &nbsp;&nbsp;Delivery</p>
-          <button className="btn btn-success w-100">
+          <p>{outlet.description.substring(0, 25)}...</p>
+          <button className="btn custom-btn w-100">
             <Link className="text-white" to={`/outlet/${outlet._id}`}>
               <div>View more</div>
             </Link>

@@ -65,7 +65,7 @@ const OutletView = () => {
         <div className="row">
           {itemArr.map((item, index) => {
             return (
-              <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={item._id}>
+              <div className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4" key={item._id}>
                 <ItemCard itemData={item} />
               </div>
             );
