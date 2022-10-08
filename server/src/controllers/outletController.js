@@ -21,5 +21,20 @@ const getById = async (req, res) => {
   }
 };
 
+const create = async (req, res) => {
+  try {
+    let body = req.body;
+    let result = await new Outlet(body).save();
+    res.send({ message: "success", res: result });
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
 
-module.exports = { getAllOutlet, getById };
+const deleteById = async (req, res) => {
+  let id = req.params.id;
+  let result = await Outlet.deleteOne({ _id: id });
+  res.send(result);
+};
+
+module.exports = { getAllOutlet, getById, create, deleteById };

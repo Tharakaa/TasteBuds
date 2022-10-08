@@ -5,6 +5,7 @@ require("dotenv").config();
 const userRoute = require("./routers/user.js")
 const outletRoute = require("./routers/outlet.js")
 const itemRoute = require("./routers/item.js")
+const utilRoute = require("./routers/util.js");
 
 // configuration data by environment file
 const PORT = process.env.PORT;
@@ -18,6 +19,7 @@ APP.use(express.static("public"))
 APP.use("/api/users", userRoute);
 APP.use("/api/outlets", outletRoute); 
 APP.use("/api/items", itemRoute);
+APP.use("/api/utils", utilRoute);
 
 // mogodb database connection creation
 mongoose.connect(DB_CONNECTION, () => {
