@@ -26,7 +26,7 @@ const OutletCard = ({ outlet }) => {
 
         <div className="card-body ">
           <div className="d-flex ">
-            <h5>{outlet.rating.toFixed(1)} &nbsp; </h5>
+            <h5>{(outlet.rating || 0).toFixed(1)} &nbsp; </h5>
 
             <Rating
               name="half-rating-read"

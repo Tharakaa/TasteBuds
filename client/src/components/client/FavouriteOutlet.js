@@ -1,7 +1,5 @@
 const FavouriteOutlet = () => {
-    return(<div>
-        Favourite outlet
-    </div>)
-}
+  return <div className="page-default-height">Favourite outlet</div>;
+};
 
 export default FavouriteOutlet;

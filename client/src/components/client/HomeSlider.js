@@ -11,7 +11,7 @@ const HomeSlider = () => {
       data-bs-ride="carousel"
       style={{ width: "100%!important", display: "block!important" }}
     >
-      <div class="carousel-indicators">
+      <div className="carousel-indicators">
         <button
           type="button"
           data-bs-target="#carouselExampleCaptions"

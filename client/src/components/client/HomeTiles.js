@@ -12,31 +12,29 @@ const HomeTiles = () => {
 
   return (
     <div className="row">
-      {tileListArr.map((tile) => {
+      {tileListArr.map((tile, index) => {
         return (
-          <React.Fragment>
-            <div className="col-12 col-md-6 col-lg-4 mt-2 mb-2">
-              <div
-                className="card border border-secondary "
-                style={{ backgroundColor: "white", borderRadius: "40px" }}
-              >
-                <div className="overflow-hidden ">
-                  <img
-                    src={tile.img}
-                    className="card-img-top zoom "
-                    alt="..."
-                    style={{ borderRadius: "100px" }}
-                  />
-                </div>
-                <h3
-                  className="text-center p-2"
-                  style={{ color: "black", fontWeight: "bolder" }}
-                >
-                  {tile.name}
-                </h3>
+          <div className="col-12 col-md-6 col-lg-4 mt-2 mb-2" key={index}>
+            <div
+              className="card border border-secondary "
+              style={{ backgroundColor: "white", borderRadius: "40px" }}
+            >
+              <div className="overflow-hidden ">
+                <img
+                  src={tile.img}
+                  className="card-img-top zoom "
+                  alt="..."
+                  style={{ borderRadius: "100px" }}
+                />
               </div>
+              <h3
+                className="text-center p-2"
+                style={{ color: "black", fontWeight: "bolder" }}
+              >
+                {tile.name}
+              </h3>
             </div>
-          </React.Fragment>
+          </div>
         );
       })}
     </div>

@@ -7,6 +7,7 @@ import Navbar from "./Navbar.js";
 import OutletPage from "./OutletPage.js";
 import OutletView from "./OutletView.js";
 import Footer from "./Footer.js";
+import OrderHistory from "./OrderHistory";
 
 const Client = () => {
   return (
@@ -19,6 +20,7 @@ const Client = () => {
         <Route path="/favourite-items" element={<FavouriteItem />} />
         <Route path="/favourite-outlets" element={<FavouriteOutlet />} />
         <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route path="/order-history" element={<OrderHistory />} />
       </Routes>
 
       <Footer></Footer>

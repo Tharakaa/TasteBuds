@@ -1,22 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
 }
 
 .zoom {
-    transition: transform 0.2s;
-  }
-  
+  transition: transform 0.2s;
+}
+
 .zoom:hover {
-    transform: scale(1.1);
-  }
+  transform: scale(1.1);
+}
 
 .wrapper {
-    position: relative;
-    z-index: 2;
-  }
+  position: relative;
+  z-index: 2;
+}
 
 .cus-font {
-    font-family: 'Kaushan Script', cursive !important;
+  font-family: 'Kaushan Script', cursive !important;
+}
+
+.page-default-height {
+  min-height: 50vh;
 }

@@ -32,9 +32,9 @@ const OutletView = () => {
           </h1>
         </div>
         <div className="row">
-          {itemArr.map((item) => {
+          {itemArr.map((item, index) => {
             return (
-              <div className="col-12 col-md-6 col-lg-4 " key={item.id}>
+              <div className="col-12 col-md-6 col-lg-4 " key={item._id}>
                 <ItemCard item={item} />
               </div>
             );
