@@ -3,13 +3,19 @@ const Cart = require("../models/cartModel");
 const addToCart = async (req, res) => {
     let userId = req.query.userId;
     let itemId = req.body.itemId;
-    let cartItem = new Cart({
-        userId: userId,
-        itemId: itemId,
-        qty: 1
-    })
-    cartItem = await cartItem.save();
-    res.send(cartItem);
+    let result = await Cart.find({ userId: userId, itemId: itemId });
+    if (result.length === 0) {
+        let cartItem = new Cart({
+            userId: userId,
+            itemId: itemId,
+            qty: 1
+        })
+        cartItem = await cartItem.save();
+        res.send(cartItem);
+    } else {
+        let cartItem = await Cart.findByIdAndUpdate(result[0]._id, {$inc : {'qty' : 1}});
+        res.send(cartItem);
+    }
 };
 
 const getCartForUser = async (req, res) => {

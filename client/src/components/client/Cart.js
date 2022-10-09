@@ -10,6 +10,7 @@ import Table from "@mui/material/Table";
 import NumberInput from "./NumberInput";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {Link} from "react-router-dom";
 
 const ShoppingCart = () => {
 
@@ -144,15 +145,17 @@ const ShoppingCart = () => {
                             </TableContainer>
                         </div>
                         <div className="col-12 col-lg-3 mt-4 mt-lg-0 pe-lg-0">
-                            <div className="card card-body border-0 shadow">
+                            <div className="card card-body border-0 shadow text-center">
                                 Total Amount
                                 <div className="text-center w-100 fs-1 fw-bold pt-2 pb-3">
                                     Rs. {total}
                                 </div>
-                                <button className="btn btn-primary w-100">
-                                    <ShoppingBagIcon style={{marginTop: '-5px'}}/>
-                                    <span className="ps-2">Go To Checkout </span>
-                                </button>
+                                <Link to="/checkout">
+                                    <button className="btn btn-primary w-100">
+                                        <ShoppingBagIcon style={{marginTop: '-5px'}}/>
+                                        <span className="ps-2">Go To Checkout </span>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
