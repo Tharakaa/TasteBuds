@@ -1,5 +1,17 @@
 const Cart = require("../models/cartModel");
 
+const addToCart = async (req, res) => {
+    let userId = req.query.userId;
+    let itemId = req.body.itemId;
+    let cartItem = new Cart({
+        userId: userId,
+        itemId: itemId,
+        qty: 1
+    })
+    cartItem = await cartItem.save();
+    res.send(cartItem);
+};
+
 const getCartForUser = async (req, res) => {
     let userId = req.query.userId;
     let result = await Cart.find({ userId: userId }).populate('itemId');
@@ -18,4 +30,4 @@ const changeItemQty = async (req, res) => {
     }
 }
 
-module.exports = { getCartForUser, changeItemQty };
+module.exports = { addToCart, getCartForUser, changeItemQty };
