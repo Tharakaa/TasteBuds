@@ -9,6 +9,7 @@ import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import {Checkbox} from "@mui/material";
 import NumberInput from "./NumberInput";
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 const ShoppingCart = () => {
 
@@ -21,7 +22,7 @@ const ShoppingCart = () => {
     const getAllItem = async () => {
         const {data} = await axios.get(`${baseURL}items/outlet/6320a022cee0bd8d88912dea?userId=${userId}`);
         console.log(data);
-        setItemArr(data);
+        setItemArr([...data, ...data]);
     };
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const ShoppingCart = () => {
                 <h2 className="mb-4">Cart</h2>
             </div>
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 col-lg-9">
                     {
                         (itemArr.length === 0) ?
                             <div className="text-danger p-5 text-center fw-bold">
@@ -48,10 +49,10 @@ const ShoppingCart = () => {
                                             <TableRow>
                                                 <TableCell></TableCell>
                                                 <TableCell></TableCell>
-                                                <TableCell align="center">Name</TableCell>
-                                                <TableCell align="center">Price</TableCell>
-                                                <TableCell align="center">Quantity</TableCell>
-                                                <TableCell align="center">Total</TableCell>
+                                                <TableCell align="center" className="fs-5">Name</TableCell>
+                                                <TableCell align="center" className="fs-5">Price</TableCell>
+                                                <TableCell align="center" className="fs-5">Quantity</TableCell>
+                                                <TableCell align="center" className="fs-5">Total</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -72,14 +73,18 @@ const ShoppingCart = () => {
                                                             alt="..."
                                                         />
                                                     </TableCell>
-                                                    <TableCell align="left">
+                                                    <TableCell align="left" className="fs-6 fw-bold ps-5">
                                                         {row.name}
                                                     </TableCell>
-                                                    <TableCell align="right">{row.calories}</TableCell>
+                                                    <TableCell align="center" className="fs-6 fw-bold">
+                                                        Rs. {row.price}
+                                                    </TableCell>
                                                     <TableCell align="center">
                                                         <NumberInput value={3}/>
                                                     </TableCell>
-                                                    <TableCell align="center">{row.carbs}</TableCell>
+                                                    <TableCell align="center" className="fs-6 fw-bold">
+                                                        Rs. {row.price}
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -87,6 +92,18 @@ const ShoppingCart = () => {
                                 </TableContainer>
                             </div>
                     }
+                </div>
+                <div className="col-12 col-lg-3 mt-4 mt-lg-0 pe-lg-0">
+                    <div className="card card-body border-0 shadow">
+                        Total Amount
+                        <div className="text-center w-100 fs-1 fw-bold pt-2 pb-3">
+                            Rs. 1590
+                        </div>
+                        <button className="btn btn-primary w-100">
+                            <ShoppingBagIcon style={{marginTop:'-5px'}} />
+                            <span className="ps-2">Go To Checkout </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
