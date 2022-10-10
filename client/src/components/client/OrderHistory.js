@@ -28,7 +28,7 @@ const OrderHistory = () => {
                 'Error occurred when retrieving data.',
                 'error'
             )
-        });;
+        });
         console.error(data)
         setItemArr(data);
     };
@@ -56,7 +56,8 @@ const OrderHistory = () => {
                         </IconButton>
                     </TableCell>
                     <TableCell align="center" className="fs-6 fw-bold ps-4">
-                        { Moment(row.createdAt).format('DD MMMM YYYY') }
+                        { // Format date using moment.js package
+                            Moment(row.createdAt).format('DD MMMM YYYY') }
                     </TableCell>
                     <TableCell align="center" className="fs-6 fw-bold">
                         {(row.paymentType === "COD") ? "Cash On Delivery"
