@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
@@ -16,6 +16,8 @@ import Paypal from "./Paypal";
 import Swal from "sweetalert2";
 
 const ShoppingCart = () => {
+
+    const navigate = useNavigate();
 
     const baseURL = process.env.REACT_APP_BASE_URL;
     const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
@@ -41,6 +43,11 @@ const ShoppingCart = () => {
         setValue(event.target.value);
     };
 
+    const placeOrder = async (paymentType) => {
+        await axios.post(`${baseURL}order/placeOrder/?userId=${userId}`, {paymentType: paymentType});
+        await getUserCart();
+    };
+
     const placeOrderBtn = () => {
         Swal.fire({
             title: 'Are you sure?',
@@ -50,11 +57,14 @@ const ShoppingCart = () => {
             confirmButtonText: 'Place Order'
         }).then((result) => {
             if (result.isConfirmed) {
+                placeOrder("COD");
                 Swal.fire(
                     'Order Placed',
                     'You will receive an email with the receipt shortly.',
                     'success'
-                )
+                ).then(() => {
+                    navigate("/");
+                })
             }
         })
     };
