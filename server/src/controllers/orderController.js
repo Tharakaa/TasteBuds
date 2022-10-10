@@ -31,7 +31,7 @@ const placeOrder = async (req, res) => {
 
 const getOrdersForUser = async (req, res) => {
     let userId = req.query.userId;
-    let result = await Cart.find({ userId: userId }).populate('itemId');
+    let result = await Order.find({ userId: userId }).populate('itemIds.itemId');
     res.send(result);
 };
 
