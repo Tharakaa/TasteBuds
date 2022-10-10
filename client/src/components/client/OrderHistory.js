@@ -10,6 +10,7 @@ import Moment from 'moment';
 import axios from "axios";
 import {Box, Collapse, IconButton} from "@mui/material";
 import {KeyboardArrowDown, KeyboardArrowUp} from "@mui/icons-material";
+import Swal from "sweetalert2";
 
 const OrderHistory = () => {
 
@@ -19,8 +20,15 @@ const OrderHistory = () => {
 
     const [itemArr, setItemArr] = useState([]);
 
+    // get previous orders for the user
     const getUserOrders = async () => {
-        const {data} = await axios.get(`${baseURL}order/getOrders/?userId=${userId}`);
+        const {data} = await axios.get(`${baseURL}order/getOrders/?userId=${userId}`).catch(() => {
+            Swal.fire(
+                'Error!',
+                'Error occurred when retrieving data.',
+                'error'
+            )
+        });;
         console.error(data)
         setItemArr(data);
     };
@@ -29,8 +37,10 @@ const OrderHistory = () => {
         getUserOrders();
     }, []);
 
+    // render rows and collapsed data for rows
     function Row(props) {
         const { row } = props;
+        // set collapsed state
         const [open, setOpen] = useState(false);
 
         return (
@@ -60,6 +70,7 @@ const OrderHistory = () => {
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                        {/* collapsible area */}
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             <Box sx={{ margin: 1, marginLeft: '60px', marginBottom: '60px' }}>
                                 <Table size="small" aria-label="purchases">

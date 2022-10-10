@@ -27,8 +27,15 @@ const ShoppingCart = () => {
     const [total, setTotal] = useState(0);
     const [value, setValue] = useState("paypal");
 
+    // fetch cart for user
     const getUserCart = async () => {
-        const {data} = await axios.get(`${baseURL}cart/getCart/?userId=${userId}`);
+        const {data} = await axios.get(`${baseURL}cart/getCart/?userId=${userId}`).catch(() => {
+            Swal.fire(
+                'Error!',
+                'Error occurred when retrieving data.',
+                'error'
+            )
+        });
         console.log(data);
         setItemArr(data);
         let totalAmount = 0;
@@ -43,11 +50,19 @@ const ShoppingCart = () => {
         setValue(event.target.value);
     };
 
+    // place order and reload data
     const placeOrder = async (paymentType) => {
-        await axios.post(`${baseURL}order/placeOrder/?userId=${userId}`, {paymentType: paymentType});
+        await axios.post(`${baseURL}order/placeOrder/?userId=${userId}`, {paymentType: paymentType}).catch(() => {
+            Swal.fire(
+                'Error!',
+                'Error occurred when saving data.',
+                'error'
+            )
+        });
         await getUserCart();
     };
 
+    // sweetalert2 package is used to make sure that placing order is not a mistake click
     const placeOrderBtn = () => {
         Swal.fire({
             title: 'Are you sure?',
@@ -164,22 +179,24 @@ const ShoppingCart = () => {
                                     </div>
                                     <hr/>
                                     <div>
-                                        {value === "paypal" ? (
-                                            <Paypal/>
-                                        ) : (
-                                            value === "cod" ?
-                                                <button className="btn btn-primary w-100" onClick={() => placeOrderBtn()}>
-                                                    Place Order
-                                                </button>
-                                                :
-                                                <div className="text-center">
-                                                    <span>Not Implemented Yet</span>
-                                                    <br/>
-                                                    <small className="text-danger">
-                                                        Please select PayPal option
-                                                    </small>
-                                                </div>
-                                        )}
+                                        {   // different payment methods are rendered according to the selected radio button
+                                            value === "paypal" ? (
+                                                <Paypal/>
+                                            ) : (
+                                                value === "cod" ?
+                                                    <button className="btn btn-primary w-100"
+                                                            onClick={() => placeOrderBtn()}>
+                                                        Place Order
+                                                    </button>
+                                                    :
+                                                    <div className="text-center">
+                                                        <span>Not Implemented Yet</span>
+                                                        <br/>
+                                                        <small className="text-danger">
+                                                            Please select PayPal option
+                                                        </small>
+                                                    </div>
+                                            )}
                                     </div>
                                     <hr/>
                                     <div className="px-3">
