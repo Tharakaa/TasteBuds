@@ -13,16 +13,20 @@ const OutletCard = ({ outletData }) => {
   const [outlet, setOutlet] = useState(outletData);
 
   const addToWishList = async () => {
-    await axios.post(`${baseURL}wishlists`, {
-      type: "OUTLET",
-      userId,
-      itemOrOutletId: outlet._id,
-    });
-    outletData.isInWishlist = !outletData.isInWishlist;
-    outletData.isInWishlist
-      ? toast.success("Successfully added!")
-      : toast.warning("Successfully removed!");
-    setOutlet(JSON.parse(JSON.stringify(outletData)));
+    try {
+      await axios.post(`${baseURL}wishlists`, {
+        type: "OUTLET",
+        userId,
+        itemOrOutletId: outlet._id,
+      });
+      outletData.isInWishlist = !outletData.isInWishlist;
+      outletData.isInWishlist
+        ? toast.success("Successfully added!")
+        : toast.warning("Successfully removed!");
+      setOutlet(JSON.parse(JSON.stringify(outletData)));
+    } catch (e) {
+      toast.error("Action failed!");
+    }
   };
 
   return (

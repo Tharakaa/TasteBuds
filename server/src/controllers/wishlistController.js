@@ -27,46 +27,58 @@ const getWishlistItem = async (req, res) => {
     });
     res.send(items);
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(500).send({ message: "failed" });
   }
 };
 
 const addToWishlist = async (req, res) => {
-  let existsObj = await Wishlist.findOne({
-    userId: req.body.userId,
-    itemOrOutletId: req.body.itemOrOutletId,
-  });
-  if (existsObj) {
-    existsObj.delete();
-    return res.send({ message: "success", res: existsObj });
+  try {
+    let existsObj = await Wishlist.findOne({
+      userId: req.body.userId,
+      itemOrOutletId: req.body.itemOrOutletId,
+    });
+    if (existsObj) {
+      existsObj.delete();
+      return res.send({ message: "success", res: existsObj });
+    }
+    let response = await new Wishlist(req.body).save();
+    res.send({ message: "success", res: response });
+  } catch (e) {
+    res.status(500).send({ message: "failed" });
   }
-  let response = await new Wishlist(req.body).save();
-  res.send({ message: "success", res: response });
 };
 
 const removeWishlistItem = async (req, res) => {
-  let id = req.params.id;
-  let result = await Wishlist.deleteOne({ _id: id });
-  res.send(result);
+  try {
+    let id = req.params.id;
+    let result = await Wishlist.deleteOne({ _id: id });
+    res.send(result);
+  } catch (e) {
+    res.status(500).send({ message: "failed" });
+  }
 };
 
 const getWishlistItemAndOutletIds = async (req, res) => {
-  let userId = req.params.userId;
-  let result = await Wishlist.find({ userId: userId });
-  let finalObj = { outletIds: [], itemIds: [] };
-  result.map((item) => {
-    if (item.type === "OUTLET") {
-      finalObj.outletIds.push(item.itemOrOutletId);
-    } else {
-      finalObj.itemIds.push(item.itemOrOutletId);
-    }
-  });
-  res.send(finalObj);
+  try {
+    let userId = req.params.userId;
+    let result = await Wishlist.find({ userId: userId });
+    let finalObj = { outletIds: [], itemIds: [] };
+    result.map((item) => {
+      if (item.type === "OUTLET") {
+        finalObj.outletIds.push(item.itemOrOutletId);
+      } else {
+        finalObj.itemIds.push(item.itemOrOutletId);
+      }
+    });
+    res.send(finalObj);
+  } catch (e) {
+    res.status(500).send({ message: "failed" });
+  }
 };
 
 module.exports = {
   addToWishlist,
   getWishlistItem,
   removeWishlistItem,
-  getWishlistItemAndOutletIds
+  getWishlistItemAndOutletIds,
 };

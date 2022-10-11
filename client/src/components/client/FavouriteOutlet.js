@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import WishlistCard from "./WishlistCard";
+import { toast } from "react-toastify";
 
 const FavouriteOutlet = () => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -12,9 +13,13 @@ const FavouriteOutlet = () => {
   }, []);
 
   async function fetchData(id) {
-    let res = await axios.get(baseURL + `wishlists/${id}?type=OUTLET`);
-    if (res && res.data) {
-      setItems(res.data);
+    try {
+      let res = await axios.get(baseURL + `wishlists/${id}?type=OUTLET`);
+      if (res && res.data) {
+        setItems(res.data);
+      }
+    } catch (e) {
+      toast.error("Data getting failed!");
     }
   }
 
@@ -31,7 +36,7 @@ const FavouriteOutlet = () => {
           {items.length > 0 ? (
             items.map((item, index) => (
               <div
-              className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4"
+                className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4"
                 key={index}
               >
                 <WishlistCard

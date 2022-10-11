@@ -20,9 +20,12 @@ const OutletList = ({ listChanged }) => {
   }, [listChanged]);
 
   async function fetchOutletData() {
-    let res = await axios.get(`${baseURL}outlets`);
-    console.log(res);
-    setOutlets(res.data);
+    try {
+      let res = await axios.get(`${baseURL}outlets`);
+      setOutlets(res.data);
+    } catch (e) {
+      toast.error("Data getting failed!");
+    }
   }
 
   const deleteItem = async (_id, index) => {

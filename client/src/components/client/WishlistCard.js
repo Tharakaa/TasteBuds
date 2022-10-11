@@ -12,10 +12,14 @@ const WishlistCard = ({ item, removeWishlistItem, index, callType }) => {
   const fileBaseURL = process.env.REACT_APP_FILE_BASE_URL;
 
   const removeItem = async () => {
-    let res = await axios.delete(`${baseURL}wishlists/${item.wishlistId}`);
-    if (res && res.data && res.data.deletedCount === 1) {
-      removeWishlistItem(index);
-      toast.warning("Item removed!");
+    try {
+      let res = await axios.delete(`${baseURL}wishlists/${item.wishlistId}`);
+      if (res && res.data && res.data.deletedCount === 1) {
+        removeWishlistItem(index);
+        toast.warning("Item removed!");
+      }
+    } catch (e) {
+      toast.error("Action failed!");
     }
   };
 

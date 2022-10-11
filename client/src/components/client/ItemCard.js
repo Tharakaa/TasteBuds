@@ -13,16 +13,20 @@ const ItemCard = ({ itemData }) => {
   const [item, setItem] = useState(itemData);
 
   const addToWishList = async () => {
-    await axios.post(`${baseURL}wishlists`, {
-      type: "ITEM",
-      userId,
-      itemOrOutletId: item._id,
-    });
-    itemData.isInWishlist = !itemData.isInWishlist;
-    itemData.isInWishlist
-      ? toast.success("Successfully added!")
-      : toast.warning("Successfully removed!");
-    setItem(JSON.parse(JSON.stringify(itemData)));
+    try {
+      await axios.post(`${baseURL}wishlists`, {
+        type: "ITEM",
+        userId,
+        itemOrOutletId: item._id,
+      });
+      itemData.isInWishlist = !itemData.isInWishlist;
+      itemData.isInWishlist
+        ? toast.success("Successfully added!")
+        : toast.warning("Successfully removed!");
+      setItem(JSON.parse(JSON.stringify(itemData)));
+    } catch (e) {
+      toast.error("Action failed!");
+    }
   };
 
   return (
