@@ -4,6 +4,7 @@ import axios from "axios";
 import ItemCard from "./ItemCard";
 import Rating from "@mui/material/Rating";
 import GoogleMap from "./GoogleMap";
+import { toast } from "react-toastify";
 
 const OutletView = () => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -22,9 +23,15 @@ const OutletView = () => {
   };
 
   const getAllItem = async () => {
-    const { data } = await axios.get(`${baseURL}items/outlet/${id}?userId=${userId}`);
-    console.log(data);
-    setItemArr(data);
+    try {
+      const { data } = await axios.get(
+        `${baseURL}items/outlet/${id}?userId=${userId}`
+      );
+      console.log(data);
+      setItemArr(data);
+    } catch (e) {
+      toast.error("Action failed!");
+    }
   };
 
   useEffect(() => {
@@ -65,7 +72,10 @@ const OutletView = () => {
         <div className="row">
           {itemArr.map((item, index) => {
             return (
-              <div className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4" key={item._id}>
+              <div
+                className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4"
+                key={item._id}
+              >
                 <ItemCard itemData={item} />
               </div>
             );

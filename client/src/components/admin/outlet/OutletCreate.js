@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
-import { TextField } from "@mui/material";
+import React from "react";
+import { TextField, InputLabel } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import GoogleMap from "./GoogleMap";
 
 const OutletCreate = ({ changeStatus }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -10,6 +12,8 @@ const OutletCreate = ({ changeStatus }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
+    setFocus,
     formState: { errors },
   } = useForm();
 
@@ -26,22 +30,27 @@ const OutletCreate = ({ changeStatus }) => {
       ) {
         let updatedObj = {
           ...data,
-          imgUrl: fileCreateRes.data.res[0]
+          imgUrl: fileCreateRes.data.res[0],
         };
         let res = await axios.post(`${baseURL}outlets`, updatedObj);
         if (res.data.message) {
           changeStatus();
           reset();
-          alert("Outlet create success!");
+          toast.success("Outlet create success!");
         } else {
-          alert("Outlet create failed!");
+          toast.error("Outlet create failed!");
         }
       } else {
-        alert("Outlet create failed!");
+        toast.error("Outlet create failed!");
       }
     } catch (e) {
-      alert("Outlet create failed!");
+      toast.error("Outlet create failed!");
     }
+  };
+
+  const mapPositionChange = (e) => {
+    setValue("lat", e.lat);
+    setValue("long", e.lng);
   };
 
   return (
@@ -49,8 +58,9 @@ const OutletCreate = ({ changeStatus }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Outlet Name</InputLabel>
             <TextField
-              label="Name"
+              label=""
               type="text"
               defaultValue=""
               size="medium"
@@ -62,8 +72,9 @@ const OutletCreate = ({ changeStatus }) => {
             />
           </div>
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Outlet Address</InputLabel>
             <TextField
-              label="Address"
+              label=""
               type="text"
               defaultValue=""
               size="medium"
@@ -74,8 +85,9 @@ const OutletCreate = ({ changeStatus }) => {
             />
           </div>
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Outlet Description</InputLabel>
             <TextField
-              label="Description"
+              label=""
               type="text"
               defaultValue=""
               size="medium"
@@ -90,8 +102,9 @@ const OutletCreate = ({ changeStatus }) => {
             />
           </div>
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Outlet Image</InputLabel>
             <TextField
-              label="Image"
+              label=""
               type="file"
               size="medium"
               className="w-100"
@@ -103,11 +116,13 @@ const OutletCreate = ({ changeStatus }) => {
             />
           </div>
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Latitude</InputLabel>
             <TextField
-              label="Latitude"
+              label=""
               type="text"
               size="medium"
               className="w-100"
+              disabled={true}
               {...register("lat", {
                 required: "Latitude is required",
               })}
@@ -116,17 +131,25 @@ const OutletCreate = ({ changeStatus }) => {
             />
           </div>
           <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <InputLabel>Longitude</InputLabel>
             <TextField
-              label="Longitude"
+              label=""
               type="text"
               size="medium"
               className="w-100"
+              disabled={true}
               {...register("long", {
                 required: "Longitude is required",
               })}
               error={!!errors.long}
               helperText={errors?.long ? errors.long.message : null}
             />
+          </div>
+          <div className="col-12 mb-3">
+            <p>
+              Please drag the marker icon for your location to get the location
+            </p>
+            <GoogleMap mapPositionChange={mapPositionChange} />
           </div>
         </div>
 

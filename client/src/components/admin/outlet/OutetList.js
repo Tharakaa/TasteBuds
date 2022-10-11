@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OutletList = ({ listChanged }) => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -19,9 +20,12 @@ const OutletList = ({ listChanged }) => {
   }, [listChanged]);
 
   async function fetchOutletData() {
-    let res = await axios.get(`${baseURL}outlets`);
-    console.log(res);
-    setOutlets(res.data);
+    try {
+      let res = await axios.get(`${baseURL}outlets`);
+      setOutlets(res.data);
+    } catch (e) {
+      toast.error("Data getting failed!");
+    }
   }
 
   const deleteItem = async (_id, index) => {
@@ -31,9 +35,9 @@ const OutletList = ({ listChanged }) => {
         let updatedObj = JSON.parse(JSON.stringify(outlets));
         updatedObj.splice(index, 1);
         setOutlets(updatedObj);
-        alert("Outlet delete success!");
+        toast.success("Outlet delete success!");
       } catch (e) {
-        alert("Outlet delete failed!");
+        toast.error("Outlet delete failed!");
       }
     }
   };

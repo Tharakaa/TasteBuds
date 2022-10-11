@@ -1,6 +1,7 @@
 import OutletCard from "./OutletCard";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OutletList = () => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -13,7 +14,7 @@ const OutletList = () => {
       console.log(data);
       setOutletArr(data);
     } catch (e) {
-      console.log(e);
+      toast.error("Action failed!");
     }
   };
 

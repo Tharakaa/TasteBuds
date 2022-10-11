@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import WishlistCard from "./WishlistCard";
+import { toast } from "react-toastify";
 
 const FavouriteItem = () => {
   const baseURL = process.env.REACT_APP_BASE_URL;
@@ -12,9 +13,13 @@ const FavouriteItem = () => {
   }, []);
 
   async function fetchData(id) {
-    let res = await axios.get(baseURL + `wishlists/${id}?type=ITEM`);
-    if (res && res.data) {
-      setItems(res.data);
+    try {
+      let res = await axios.get(baseURL + `wishlists/${id}?type=ITEM`);
+      if (res && res.data) {
+        setItems(res.data);
+      }
+    } catch (e) {
+      toast.error("Data getting failed!");
     }
   }
 
