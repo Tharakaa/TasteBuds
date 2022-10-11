@@ -25,6 +25,10 @@ const ItemCard = ({ itemData }) => {
     setItem(JSON.parse(JSON.stringify(itemData)));
   };
 
+  const addToCart = async (_id) => {
+    await axios.post(`${baseURL}cart/addToCart/?userId=${userId}`, {itemId:_id});
+  };
+
   return (
     <div
       className="card h-100 mb-4 shadow bg-white rounded"
@@ -70,7 +74,7 @@ const ItemCard = ({ itemData }) => {
         <p className="mb-0">Description: {item.description}</p>
       </div>
       <div className="card-footer bg-white mt-0 pt-0 border-0 pb-4">
-        <button className="btn custom-btn w-100">
+        <button className="btn custom-btn w-100" onClick={() => addToCart(item._id)}>
           <ShoppingCartIcon />
           <span className="ps-2">Add to cart </span>
         </button>

@@ -7,8 +7,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
+import axios from "axios";
 
 const Navbar = () => {
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const userId = localStorage.getItem("userId");
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,6 +21,24 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [cartCount, setCartCount] = useState(0);
+
+  const getUserCart = async () => {
+    const {data} = await axios.get(`${baseURL}cart/getCart/?userId=${userId}`);
+    if (data) {
+      setCartCount(data.length);
+    } else {
+      setCartCount(0);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getUserCart();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [])
 
   let logOut = () => {};
 
@@ -95,7 +117,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/shopping-cart">
-                  <Badge badgeContent={1} color="error">
+                  <Badge badgeContent={cartCount} color="error">
                     <ShoppingCartIcon />
                   </Badge>
 
