@@ -31,7 +31,7 @@ const ItemCard = ({ itemData }) => {
 
   return (
     <div
-      className="card h-100 mb-4 shadow bg-white rounded"
+      className="card h-100 mb-4 shadow bg-white"
       style={{ backgroundColor: "white" }}
     >
       <h4
@@ -48,7 +48,7 @@ const ItemCard = ({ itemData }) => {
         />
       </div>
 
-      <div className="card-body">
+      <div className="card-body pb-0">
         <div className="d-flex justify-content-between ">
           <div className="d-flex ">
             <h5>{item.rating.toFixed(1)} &nbsp; </h5>
