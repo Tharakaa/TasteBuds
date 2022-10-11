@@ -31,7 +31,7 @@ const OutletCard = ({ outletData }) => {
 
   return (
     <div
-      className="card h-100 w-100 mb-4 shadow  rounded"
+      className="card h-100 w-100 mb-4 shadow"
       style={{ backgroundColor: "white" }}
     >
       <div className="text-end custom-green-color p-2">
@@ -55,7 +55,7 @@ const OutletCard = ({ outletData }) => {
         />
       </div>
 
-      <div className="card-body ">
+      <div className="card-body pb-0">
         <div className="d-flex ">
           <h5>{(outlet.rating || 0).toFixed(1)} &nbsp; </h5>
 
@@ -68,7 +68,7 @@ const OutletCard = ({ outletData }) => {
           />
         </div>
         <h5>{outlet.address}</h5>
-        <p>{outlet.description.substring(0, 25)}...</p>
+        <p className="mb-0">{outlet.description.substring(0, 50)}...</p>
       </div>
       <div className="card-footer bg-white mt-0 pt-0 border-0 pb-4">
         <button className="btn custom-btn w-100">
