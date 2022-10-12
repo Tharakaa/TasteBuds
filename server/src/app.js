@@ -10,6 +10,8 @@ const orderRoute = require("./routers/order.js")
 const utilRoute = require("./routers/util.js");
 const wishlistRoute = require("./routers/wishlist.js");
 const logger = require("./middleware/logger.js")
+const swaggerUi = require('swagger-ui-express');
+const swaggerOutputFile = require('../swagger-output.json');
 
 // configuration data by environment file
 const PORT = process.env.PORT;
@@ -20,8 +22,9 @@ const APP = express();
 APP.use(cors());
 APP.use(express.json());
 APP.use(express.static("public"))
+APP.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutputFile));
 APP.use("/api/users", logger, userRoute);
-APP.use("/api/outlets", logger, outletRoute); 
+APP.use("/api/outlets", logger, outletRoute);
 APP.use("/api/items", logger, itemRoute);
 APP.use("/api/cart", logger, cartRoute);
 APP.use("/api/order", logger, orderRoute);
