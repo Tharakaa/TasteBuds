@@ -12,6 +12,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {Link} from "react-router-dom";
 import Swal from "sweetalert2";
+import LoadingOverlay from 'react-loading-overlay';
 
 const ShoppingCart = () => {
 
@@ -21,6 +22,7 @@ const ShoppingCart = () => {
 
     const [itemArr, setItemArr] = useState([]);
     const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const getUserCart = async () => {
         // retrieve cart for user
@@ -32,6 +34,7 @@ const ShoppingCart = () => {
                 'error'
             )
         });
+        setLoading(false);
         console.log(data);
         setItemArr(data);
 
@@ -103,6 +106,7 @@ const ShoppingCart = () => {
     }, []);
 
     return (
+        <LoadingOverlay active={loading} spinner>
         <div className="container mt-4 mb-4 page-default-height">
             <div>
                 <h2 className="mb-4">Cart</h2>
@@ -190,6 +194,7 @@ const ShoppingCart = () => {
                 }
             </div>
         </div>
+        </LoadingOverlay>
     );
 };
 

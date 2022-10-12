@@ -11,6 +11,7 @@ import axios from "axios";
 import {Box, Collapse, IconButton} from "@mui/material";
 import {KeyboardArrowDown, KeyboardArrowUp} from "@mui/icons-material";
 import Swal from "sweetalert2";
+import LoadingOverlay from "react-loading-overlay";
 
 const OrderHistory = () => {
 
@@ -19,9 +20,11 @@ const OrderHistory = () => {
     const userId = localStorage.getItem("userId");
 
     const [itemArr, setItemArr] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // get previous orders for the user
     const getUserOrders = async () => {
+        setLoading(true);
         const {data} = await axios.get(`${baseURL}order/getOrders/?userId=${userId}`).catch(() => {
             Swal.fire(
                 'Error!',
@@ -29,6 +32,7 @@ const OrderHistory = () => {
                 'error'
             )
         });
+        setLoading(false);
         console.error(data)
         setItemArr(data);
     };
@@ -109,41 +113,43 @@ const OrderHistory = () => {
     }
 
     return (
-        <div className="container mt-4 mb-4 page-default-height">
-            <div>
-                <h2 className="mb-4">Order History</h2>
+        <LoadingOverlay active={loading} spinner>
+            <div className="container mt-4 mb-4 page-default-height">
+                <div>
+                    <h2 className="mb-4">Order History</h2>
+                </div>
+                <div className="row">
+                    {(itemArr.length === 0)
+                        ?
+                        <div className="col-12 text-danger p-5 text-center fw-bold">
+                            Your order history is empty
+                        </div>
+                        :
+                        <div className="col-12">
+                            <TableContainer component={Paper}>
+                                <Table sx={{minWidth: 650}} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell padding="checkbox"></TableCell>
+                                            <TableCell align="center" className="fs-5">Date</TableCell>
+                                            <TableCell align="center" className="fs-5">Payment Mode</TableCell>
+                                            <TableCell align="center" className="fs-5">Total</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            itemArr?.map((row) => (
+                                                <Row key={row._id} row={row}/>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                    }
+                </div>
             </div>
-            <div className="row">
-                {(itemArr.length === 0)
-                    ?
-                    <div className="col-12 text-danger p-5 text-center fw-bold">
-                        Your order history is empty
-                    </div>
-                    :
-                    <div className="col-12">
-                        <TableContainer component={Paper}>
-                            <Table sx={{minWidth: 650}} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell padding="checkbox"></TableCell>
-                                        <TableCell align="center" className="fs-5">Date</TableCell>
-                                        <TableCell align="center" className="fs-5">Payment Mode</TableCell>
-                                        <TableCell align="center" className="fs-5">Total</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {
-                                        itemArr?.map((row) => (
-                                            <Row key={row._id} row={row}/>
-                                        ))
-                                    }
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
-                }
-            </div>
-        </div>
+        </LoadingOverlay>
     );
 };
 

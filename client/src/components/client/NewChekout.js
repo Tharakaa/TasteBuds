@@ -14,6 +14,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Paypal from "./Paypal";
 import Swal from "sweetalert2";
+import LoadingOverlay from "react-loading-overlay";
 
 const ShoppingCart = () => {
 
@@ -26,9 +27,11 @@ const ShoppingCart = () => {
     const [itemArr, setItemArr] = useState([]);
     const [total, setTotal] = useState(0);
     const [value, setValue] = useState("paypal");
+    const [loading, setLoading] = useState(false);
 
     // fetch cart for user
     const getUserCart = async () => {
+        setLoading(true);
         const {data} = await axios.get(`${baseURL}cart/getCart/?userId=${userId}`).catch(() => {
             Swal.fire(
                 'Error!',
@@ -36,6 +39,7 @@ const ShoppingCart = () => {
                 'error'
             )
         });
+        setLoading(false);
         console.log(data);
         setItemArr(data);
         let totalAmount = 0;
@@ -52,6 +56,7 @@ const ShoppingCart = () => {
 
     // place order and reload data
     const placeOrder = async (paymentType) => {
+        setLoading(true);
         await axios.post(`${baseURL}order/placeOrder/?userId=${userId}`, {paymentType: paymentType}).catch(() => {
             Swal.fire(
                 'Error!',
@@ -60,6 +65,7 @@ const ShoppingCart = () => {
             )
         });
         await getUserCart();
+        setLoading(false);
     };
 
     // sweetalert2 package is used to make sure that placing order is not a mistake click
@@ -90,7 +96,7 @@ const ShoppingCart = () => {
     }, []);
 
     return (
-        <>
+        <LoadingOverlay active={loading} spinner>
             <div className="container mt-4 mb-4 page-default-height">
                 <div>
                     <h2 className="mb-4">Checkout</h2>
@@ -213,7 +219,7 @@ const ShoppingCart = () => {
                     }
                 </div>
             </div>
-        </>
+        </LoadingOverlay>
     );
 };
 
