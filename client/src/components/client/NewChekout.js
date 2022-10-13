@@ -66,6 +66,13 @@ const ShoppingCart = () => {
         });
         await getUserCart();
         setLoading(false);
+        Swal.fire(
+            'Order Placed',
+            'You will receive an email with the receipt shortly.',
+            'success'
+        ).then(() => {
+            navigate("/");
+        })
     };
 
     // sweetalert2 package is used to make sure that placing order is not a mistake click
@@ -79,13 +86,6 @@ const ShoppingCart = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 placeOrder("COD");
-                Swal.fire(
-                    'Order Placed',
-                    'You will receive an email with the receipt shortly.',
-                    'success'
-                ).then(() => {
-                    navigate("/");
-                })
             }
         })
     };
@@ -187,9 +187,9 @@ const ShoppingCart = () => {
                                     <div>
                                         {   // different payment methods are rendered according to the selected radio button
                                             value === "paypal" ? (
-                                                <Paypal/>
-                                            ) : (
-                                                value === "cod" ?
+                                                <Paypal onComplete={() => {placeOrder('PAYPAL')}}/>
+                                                ) : (
+                                                    value === "cod" ?
                                                     <button className="btn btn-primary w-100"
                                                             onClick={() => placeOrderBtn()}>
                                                         Place Order
