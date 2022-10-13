@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-export default function Paypal() {
+export default function Paypal({onComplete}) {
   const paypal = useRef();
 
   useEffect(() => {
@@ -42,6 +42,9 @@ export default function Paypal() {
       status: payment.status,
       paymentMethod: data.paymentSource,
     };
+    if (payment.status == 'COMPLETED') {
+      onComplete();
+    }
     console.log(paymentDetails);
   };
   return (
