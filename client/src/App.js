@@ -11,7 +11,6 @@ const App = () => {
       <Route path="/*" element={<Client />} />
       <Route path="/admin/*" element={<Admin />} />
       <Route path="/product" component={Item} />
-      
     </Routes>
   );
 };
