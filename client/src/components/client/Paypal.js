@@ -1,7 +1,18 @@
 import React, { useRef, useEffect } from "react";
 
-export default function Paypal({onComplete}) {
+export default function Paypal({ onComplete, orderData }) {
   const paypal = useRef();
+
+  const itemList = orderData.map((item) => {
+    return {
+      reference_id: (Math.random() * 1000000000).toFixed(0),
+      description: `${item.itemId.name} x ${item.qty}`,
+      amount: {
+        currency_code: "USD",
+        value: (item.itemId.price * item.qty || 0).toFixed(2),
+      },
+    };
+  });
 
   useEffect(() => {
     window.paypal
@@ -10,15 +21,7 @@ export default function Paypal({onComplete}) {
         createOrder: (data, actions, err) => {
           return actions.order.create({
             intent: "CAPTURE",
-            purchase_units: [
-              {
-                description: "Table",
-                amount: {
-                  currency_code: "USD",
-                  value: 0.01,
-                },
-              },
-            ],
+            purchase_units: itemList,
           });
         },
 
@@ -42,7 +45,7 @@ export default function Paypal({onComplete}) {
       status: payment.status,
       paymentMethod: data.paymentSource,
     };
-    if (payment.status == 'COMPLETED') {
+    if (payment.status == "COMPLETED") {
       onComplete();
     }
     console.log(paymentDetails);

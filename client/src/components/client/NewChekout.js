@@ -187,7 +187,7 @@ const ShoppingCart = () => {
                                     <div>
                                         {   // different payment methods are rendered according to the selected radio button
                                             value === "paypal" ? (
-                                                <Paypal onComplete={() => {placeOrder('PAYPAL')}}/>
+                                                <Paypal onComplete={() => {placeOrder('PAYPAL')}} orderData={itemArr}/>
                                                 ) : (
                                                     value === "cod" ?
                                                     <button className="btn btn-primary w-100"
